@@ -1,0 +1,17 @@
+<section>
+  <div>
+    <p class="text-lg font-bold text-green-600">
+      Hi, {{ user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1) }}
+    </p>
+
+    <p class="text-base font-semibold text-green-600">
+      You can choose any location random in google maps to see hospital, schools, suppermarkets, parks in radius of 20km !
+    </p>
+
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15" (mapClick)="onMapClick($event)">
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
+    
+    <button (click)="submitLocation()">Submit Location</button>
+  </div>
+</section>

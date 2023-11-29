@@ -1,0 +1,62 @@
+<main class="w-full h-full">
+  <header class="bg-green-100 w-full fixed top-0 z-10 h-4rem">
+    <nav class="flex align-items-center justify-content-between px-4 shadow-1 h-4rem">
+      <a [routerLink]="['/home']">
+        <img
+          src="assets/images/logo.png"
+          alt="logo"
+        />
+      </a>
+
+      <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+        <div class="flex align-items-center gap-1">
+          <p-button
+            label="Login"
+            (click)="login()"
+            [text]="true"
+            severity="success"
+          ></p-button>
+
+          <p-button
+            label="Register"
+            (click)="register()"
+            [text]="true"
+            severity="success"
+          ></p-button>
+        </div>
+      </ng-container>
+
+      <ng-template #loggedInTemplate>
+        <div
+          *ngIf="user && isLoggedIn"
+          class="card flex align-items-center gap-2 justify-content-center"
+        >
+          <p-toast></p-toast>
+          <p-menu #menu [model]="items" [popup]="true"></p-menu>
+          <p
+            *ngIf="user && isLoggedIn"
+            class="text-2xl font-bold text-green-600 hidden sm:block"
+          >
+            {{ user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1) }}
+          </p>
+          <p-avatar
+            *ngIf="isLoggedIn && user"
+            label="{{ user?.name?.substring(0, 1).toUpperCase() }}"
+            shape="circle"
+            [style]="{
+              'background-color': '#4caf4f',
+              color: '#ffffff',
+            }"
+            (click)="menu.toggle($event)"
+            class="cursor-pointer border-circle border-2 border-300"
+          ></p-avatar>
+        </div>
+      </ng-template>
+    </nav>
+  </header>
+
+  <div class="w-full h-full px-4" [style]="{ 'margin-top': '5rem' }">
+    <router-outlet></router-outlet>
+    <p-toast></p-toast>
+  </div>
+</main>
