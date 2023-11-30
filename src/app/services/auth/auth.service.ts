@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
-import { User } from '../interfaces/auth';
+import { User } from '../../interfaces/auth';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8017/v1/auth';
+  private baseUrl = `${environment.baseUrl}/auth`;
   private isLoggedIn = new BehaviorSubject<boolean>(false);
   private userSubject  = new BehaviorSubject<User | null>(null);
 
@@ -21,7 +22,7 @@ export class AuthService {
   ) {
     const storedUser = localStorage.getItem('user');
     const storedToken = localStorage.getItem('token');
-  
+
     if (storedUser && storedToken && !this.isLoggedIn.getValue()) {
       const user: User = JSON.parse(storedUser);
       this.userSubject.next(user);
