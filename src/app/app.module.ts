@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AgmCoreModule } from '@agm/core'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,8 +37,7 @@ import { AdminComponent } from './components/admin/admin.component';
     ToastModule,
     BrowserAnimationsModule,
     AvatarModule,
-    MenuModule,
-    AgmCoreModule.forRoot({})
+    MenuModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
-import { AuthService } from './services/auth.service'
+import { AuthService } from './services/auth/auth.service'
 import { Router } from '@angular/router';
 
 @Component({
@@ -40,19 +40,6 @@ export class AppComponent {
     });
 
     this.items = [
-      {
-          label: 'Options',
-          items: [
-              {
-                  label: 'Update',
-                  icon: 'pi pi-refresh',
-              },
-              {
-                  label: 'Delete',
-                  icon: 'pi pi-times',
-              }
-          ]
-      },
       {
         items: [
           {
