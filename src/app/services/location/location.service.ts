@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Loader } from '@googlemaps/js-api-loader'
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,11 +13,30 @@ export class LocationService {
   private baseUrl = `${environment.baseUrl}/location`
   private locationSubject = new BehaviorSubject<Location | null>(null)
 
+  private loader = new Loader({
+    apiKey: environment.apiKey,
+    version: 'weekly'
+  })
+
   location$ = this.locationSubject.asObservable()
   constructor(
     private http: HttpClient,
     private router: Router,
   ) {}
+
+  getLocationInfoFromLatLng(location: Location) {
+    const { lat, lng } = location
+    console.log('lat', lat)
+    console.log('lng', lng)
+    return this.http.get(`${environment.googleMapsUrl}?latlng=${lat},${lng}&key=${environment.apiKey}`)
+      .pipe(
+        tap((response: any) => {
+          if (response) {
+            this.locationSubject.next(response)
+          }
+        })
+      )
+  }
 
   submitLocation(location: Location) {
     const headers = new HttpHeaders({
@@ -30,10 +50,7 @@ export class LocationService {
       .pipe(
         tap((response: any) => {
           if (response) {
-            console.log('response', response)
             this.locationSubject.next(response)
-            // this.router.navigate(['/result'])
-            console.log('this.location$', this.location$)
           }
         })
       )
