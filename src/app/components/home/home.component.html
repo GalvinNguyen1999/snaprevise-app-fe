@@ -1,22 +1,35 @@
 <section>
   <div>
-    <p class="text-lg font-bold text-green-600">
-      Hi, {{ user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1) }}
-    </p>
-
-    <p class="text-base font-semibold text-green-600">
-      You can choose any location random in google maps to see hospital, schools, suppermarkets, parks in radius of 20km !
-    </p>
+    <div>
+      <p class="text-lg font-semibold">
+        Hi, {{ user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1) }} !
+      </p>
+  
+      <p class="text-gray-800">
+        You can choose any location random in google maps to see hospital, schools, suppermarkets, parks in radius of 20km !
+      </p>
+    </div>
 
     <div #map style="height: 500px" class="mb-4"></div>
 
-    <p-button
-      label="Submit Location"
-      [raised]="true"
-      severity="success"
-      (click)="submitLocation()"
-    >
-     </p-button>
-
+    <div class="flex align-items-center gap-4">
+      <div class="flex align-items-center gap-2">
+       <div *ngIf="location">
+         <p class="text-lg font-semibold">
+           {{ location.name }}
+         </p>
+         <p class="text-gray-800">
+           {{ location.address }}
+         </p>
+       </div>
+      </div>
+      <p-button
+        label="Submit Location"
+        (click)="submitLocation()"
+        severity="secondary"
+        [text]="true"
+      >
+       </p-button>
+    </div>
   </div>
 </section>

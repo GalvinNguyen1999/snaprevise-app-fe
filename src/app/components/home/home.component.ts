@@ -14,6 +14,7 @@ import { Location } from '../../interfaces/location'
 })
 export class HomeComponent {
   user: any;
+  location: Location | null = null;
 
   @ViewChild('map') mapRef!: ElementRef;
   private map: google.maps.Map | undefined;
@@ -33,6 +34,11 @@ export class HomeComponent {
   ) {
     this.authService.user$.subscribe(user => {
       this.user = user;
+    });
+
+    this.locationService.location$.subscribe(location => {
+      this.location = location;
+      console.log('this.location', this.location)
     });
   }
 
@@ -64,6 +70,16 @@ export class HomeComponent {
       lat: latLng.lat(),
       lng: latLng.lng()
     };
+
+    this.locationService.getLocationInfoFromLatLng(this.selectedLocation).subscribe({
+      next: (response) => {
+        console.log('this.selectedLocation', this.selectedLocation)
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Location selected successfully' });
+      },
+      error: (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+      }
+    });
   }
 
   public submitLocation() {
@@ -93,3 +109,9 @@ export class HomeComponent {
     this.router.navigate(['login']);
   }
 }
+
+/* 
+1. Get location on google maps depend lat and lng
+2. Submit location to backend
+3. Show success message
+ */
