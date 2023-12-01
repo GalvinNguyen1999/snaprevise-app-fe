@@ -38,11 +38,14 @@ Install dependencies
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your ./src/environments/environment.ts file
+To run this project, you will need to add the following environment variables to your ./src/environments/environment.ts file:
+
 ```bash
+export const environment = {
   production: false,
   apiKey: '',
   baseUrl: 'http://localhost:8017/v1'
+}
 ```
 
 Start the server
