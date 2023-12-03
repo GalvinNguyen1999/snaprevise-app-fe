@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { AdminComponent } from './components/admin/admin.component';
+import { MapSubmissionComponent } from './components/map-submission/map-submission.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AdminComponent } from './components/admin/admin.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    MapSubmissionComponent
   ],
   imports: [
     BrowserModule,

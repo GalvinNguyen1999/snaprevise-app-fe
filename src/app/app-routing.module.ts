@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { authGuard, adminGuard } from './guards/auth.guard';
 import { AdminComponent } from './components/admin/admin.component'
+import { MapSubmissionComponent } from './components/map-submission/map-submission.component'
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'map-submission',
+    component: MapSubmissionComponent,
     canActivate: [authGuard]
   },
   {
