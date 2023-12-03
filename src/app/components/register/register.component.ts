@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { User } from 'src/app/interfaces/auth';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { passwordMatchValidator } from 'src/app/shared/password-match.directive';
+import { Component } from '@angular/core'
+import { FormBuilder, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { MessageService } from 'primeng/api'
+import { User } from 'src/app/interfaces/auth'
+import { AuthService } from 'src/app/services/auth/auth.service'
+import { passwordMatchValidator } from 'src/app/shared/password-match.directive'
 
 @Component({
   selector: 'app-register',
@@ -28,27 +28,27 @@ export class RegisterComponent {
   ) { }
 
   get name() {
-    return this.registerForm.controls['name'];
+    return this.registerForm.controls['name']
   }
 
   get password() {
-    return this.registerForm.controls['password'];
+    return this.registerForm.controls['password']
   }
 
   get confirmPassword() {
-    return this.registerForm.controls['confirmPassword'];
+    return this.registerForm.controls['confirmPassword']
   }
 
   register() {
     const { name, password } = this.registerForm.value as User
 
-    this.authService.registerUser({name, password}).subscribe({
+    this.authService.registerUser({ name, password }).subscribe({
       next: () => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Registered' });
-        this.router.navigate(['/login']);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Registered' })
+        this.router.navigate(['/login'])
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.message })
       }
     })
   }

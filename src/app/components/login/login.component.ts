@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { Component } from '@angular/core'
+import { FormBuilder, Validators } from '@angular/forms'
+import { MessageService } from 'primeng/api'
+import { AuthService } from 'src/app/services/auth/auth.service'
 import { User } from '../../interfaces/auth'
 
 @Component({
@@ -21,21 +21,21 @@ export class LoginComponent {
     private msgService: MessageService
   ) {}
 
-  get name() { return this.loginForm.controls['name']; }
+  get name() { return this.loginForm.controls['name'] }
 
-  get password() { return this.loginForm.controls['password']; }
+  get password() { return this.loginForm.controls['password'] }
 
   loginUser() {
     this.authService.loginUser(this.loginForm.value as User).subscribe({
       next: response => {
-        this.msgService.add({ severity: 'success', summary: 'Success', detail: 'Login successfully' });
+        this.msgService.add({ severity: 'success', summary: 'Success', detail: 'Login successfully' })
 
-        localStorage.setItem('user', JSON.stringify(response.user));
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user))
+        localStorage.setItem('token', response.token)
       },
 
-      error: error => {
-        this.msgService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+      error: () => {
+        this.msgService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' })
       }
     })
   }
