@@ -1,36 +1,23 @@
 import { Component } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { AuthService } from './services/auth/auth.service'
 import { Router } from '@angular/router';
+import { User } from './interfaces/auth'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-primeng-app';
   items: MenuItem[] | undefined;
   isLoggedIn: boolean = false;
-  user: any;
+  user: User | null = null;
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private msgService: MessageService
-  ) {}
-
-  ngOnInit() {
-    const storedUser = localStorage.getItem('user');
-    const storedToken = localStorage.getItem('token');
-
-    if (storedUser && storedToken) {
-      const user: any = JSON.parse(storedUser);
-      this.authService.setUser(user);
-      this.authService.setIsLoggedIn(true);
-    }
-
+    private router: Router
+  ) {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
@@ -51,7 +38,18 @@ export class AppComponent {
           }
         ]
       }
-   ];
+   ]
+  }
+
+  ngOnInit() {
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+
+    if (storedUser && storedToken) {
+      const user: any = JSON.parse(storedUser);
+      this.authService.setUser(user);
+      this.authService.setIsLoggedIn(true);
+    }
   }
 
   login() {
@@ -64,9 +62,4 @@ export class AppComponent {
     this.authService.setIsLoggedIn(false)
     this.router.navigate(['login'])
   }
-
-  register() {
-    this.router.navigate(['register'])
-  }
-
 }
