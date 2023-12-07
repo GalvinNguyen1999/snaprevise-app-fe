@@ -6,13 +6,16 @@ import {
 } from '@angular/core'
 import { Loader } from '@googlemaps/js-api-loader'
 import { environment } from '../../../environments/environment'
-import { Location } from '../../interfaces/location'
+import { LocationService } from '../../services/location/location.service'
+
 @Component({
   selector: 'app-map-submission',
   templateUrl: './map-submission.component.html',
   styleUrls: ['./map-submission.component.css']
 })
+
 export class MapSubmissionComponent {
+  selectedPlaceId: string | undefined
   // configure google maps
   @ViewChild('map') mapRef!: ElementRef
   private map: google.maps.Map | undefined
@@ -22,12 +25,13 @@ export class MapSubmissionComponent {
   })
 
   constructor(
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private locationService: LocationService
   ) {}
 
   ngOnInit(): void {
     this.loader
-      .importLibrary('maps')
+      .importLibrary('places')
       .then(() => {
         this.initMap()
       })
@@ -51,9 +55,24 @@ export class MapSubmissionComponent {
   }
 
   private handleMapClick(latLng: google.maps.LatLng) {
-    const location: Location = {
-      lat: latLng.lat(),
-      lng: latLng.lng()
+    const geocoder = new google.maps.Geocoder()
+    geocoder.geocode(
+      { location: latLng },
+      (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK && Array.isArray(results)) {
+          this.selectedPlaceId = results[0].place_id
+        } else {
+          console.error('Geocode was not successful for the following reason:', status)
+        }
+      }
+    )
+  }
+
+  submitLocation() {
+    if (this.selectedPlaceId) {
+      this.locationService.submitLocationDetail(this.selectedPlaceId)
+    } else {
+      console.error('No place selected')
     }
   }
 }
