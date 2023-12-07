@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Loader } from '@googlemaps/js-api-loader'
 import { Injectable } from '@angular/core'
-import { BehaviorSubject, tap } from 'rxjs'
-import { Router } from '@angular/router'
+import { BehaviorSubject } from 'rxjs'
 import { environment } from '../../../environments/environment'
 import { Location } from '../../interfaces/location'
 
@@ -10,35 +8,29 @@ import { Location } from '../../interfaces/location'
   providedIn: 'root'
 })
 export class LocationService {
-  private baseUrl = `${environment.baseUrl}/location`
+  private baseUrlLocation = `${environment.baseUrl}/location`
   private locationSubject = new BehaviorSubject<Location | null>(null)
-
-  private loader = new Loader({
-    apiKey: environment.apiKey,
-    version: 'weekly'
-  })
 
   location$ = this.locationSubject.asObservable()
   constructor(
-    private http: HttpClient,
-    private router: Router
+    private http: HttpClient
   ) {}
 
-  submitLocation(location: Location) {
+  submitLocationDetail(placeId: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `${localStorage.getItem('token')}`
     })
 
-    const params = { location: `${location.lat},${location.lng}` }
+    const options = {
+      headers: headers,
+      params: { placeId: placeId }
+    }
 
-    return this.http.post(`${this.baseUrl}/submit-location`, null, { headers, params })
-      .pipe(
-        tap((response: any) => {
-          if (response) {
-            this.locationSubject.next(response)
-          }
-        })
-      )
+    return this.http.post(`${this.baseUrlLocation}/submit-location`, null, options)
+      .subscribe({
+        next: (response) => { },
+        error: (error) => { console.error(error) }
+      })
   }
 }
