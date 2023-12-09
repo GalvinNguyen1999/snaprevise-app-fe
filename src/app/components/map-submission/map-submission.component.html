@@ -1,24 +1,25 @@
-<section>
-  <div>
-    <div #map style="height: 500px" class="mb-4"></div>
+<section class="grid">
+  <div #map class="col-8 h-screen border-1 border-round border-200"></div>
 
-    <div class="flex align-items-center gap-4">
-      <div class="flex align-items-center gap-2">
-         <p class="text-lg font-semibold">
-           Name
-         </p>
-         <p class="text-gray-800">
-           Address
-         </p>
+  <div class="col-4 py-0">
+    <div class="border-1 border-round border-400 h-25rem flex flex-column align-items-center pb-2">
+      <div class="text-xl font-bold py-2 border-bottom-1 border-200 w-full text-center">
+        Infomation Location
+      </div>
+
+      <div class="flex flex-column align-items-baseline w-full h-full px-3 flex-1">
+        <div *ngFor="let detail of locationDetailsList" class="flex align-items-center gap-2">
+          <h4>{{ detail.label }}</h4>
+          <div class="text-sm">{{ detail.value }}</div>
+        </div>
       </div>
 
       <p-button
         label="Submit Location"
-        severity="secondary"
-        [text]="true"
         (click)="submitLocation()"
+        class="w-full flex align-items-center justify-content-center"
       >
-       </p-button>
+      </p-button>
     </div>
   </div>
 </section>
