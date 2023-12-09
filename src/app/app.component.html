@@ -1,5 +1,5 @@
 <main class="w-full h-full">
-  <header class="w-full fixed top-0 z-10 h-4rem bg-white">
+  <header class="mb-4">
     <nav class="flex align-items-center justify-content-between px-4 shadow-1 h-4rem">
       <div class="flex align-items-center gap-4">
         <a [routerLink]="['/home']">
@@ -58,7 +58,7 @@
     </nav>
   </header>
 
-  <div class="w-full h-full px-4" [style]="{ 'margin-top': '5rem' }">
+  <div class="px-4">
     <router-outlet></router-outlet>
     <p-toast></p-toast>
   </div>

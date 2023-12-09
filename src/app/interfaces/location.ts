@@ -1,6 +1,12 @@
-export interface Location {
+export interface LocationDetails {
   name?: string;
   address?: string;
-  lat: number;
-  lng: number;
+  country?: string;
+  placeType?: string;
+  location?: { lat: number; lng: number };
+}
+
+export interface LocationDetailItem {
+  label: string;
+  value: string;
 }
